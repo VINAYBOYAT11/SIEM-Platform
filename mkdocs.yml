@@ -1,0 +1,143 @@
+site_name: SOCFortress CoPilot Docs
+site_description: User guide and developer/AI-agent documentation for SOCFortress CoPilot
+site_url: https://socfortress.github.io/CoPilot/
+repo_url: https://github.com/socfortress/CoPilot
+edit_uri: edit/main/
+
+# Optional: show a link to the repo in the header like many MkDocs sites
+repo_name: socfortress/CoPilot
+
+# Use pretty URLs (/user/overview/) instead of .html pages.
+use_directory_urls: true
+
+theme:
+  name: material
+  language: en
+  logo: assets/brand/logo.png
+  favicon: assets/brand/favicon.ico
+  font:
+    text: IBM Plex Sans
+    code: JetBrains Mono
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.sections
+    - navigation.expand
+    - navigation.tracking
+    - navigation.path
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/socfortress/CoPilot
+    - icon: fontawesome/solid/globe
+      link: https://www.socfortress.co
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@taylorwalton_socfortress
+    - icon: fontawesome/brands/medium
+      link: https://medium.com/@socfortress
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/socfortressmdr/
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+  - tables
+  - def_list
+  - footnotes
+
+extra_css:
+  - stylesheets/socfortress-theme.css
+  - stylesheets/extra.css
+
+nav:
+  - Home: index-mkdocs.md
+  - Getting Started: []
+  - User Guide:
+      - Overview: user/overview.md
+      - Quickstart (Operators): user/operators-quickstart.md
+      - Quickstart (Admins/Engineers): user/admins-quickstart.md
+      - Customer Provisioning (Tenancy): user/customer-provisioning.md
+      - Features by Area: user/features.md
+      - CoPilot ↔ Shuffle Integration (Admin/Operator): user/shuffle-integration.md
+      - Navigation Guide (UI): user/navigation.md
+      - UI Guide (mirrors menu):
+          - Start here: user/ui/README.md
+          - Overview: user/ui/overview.md
+          - Incident Management:
+              - Incident Management: user/ui/incident-management.md
+              - Sources: user/ui/incident-sources.md
+              - Alerts: user/ui/incident-alerts.md
+              - Cases: user/ui/incident-cases.md
+              - Alerting → Shuffle (notifications): user/ui/alerting-shuffle.md
+          - Alerts:
+              - Alerts: user/ui/alerts.md
+              - SIEM: user/ui/alerts-siem.md
+              - MITRE ATT&CK: user/ui/alerts-mitre.md
+              - Atomic Red Team: user/ui/alerts-atomic-red-team.md
+          - Artifacts: user/ui/artifacts.md
+          - Customers: user/ui/customers.md
+          - Agents:
+              - Agents: user/ui/agents.md
+              - Groups: user/ui/agents-groups.md
+              - Sysmon Config: user/ui/agents-sysmon-config.md
+              - Detection Rules: user/ui/agents-detection-rules.md
+              - CoPilot Actions: user/ui/agents-copilot-actions.md
+              - Vulnerability Overview: user/ui/agents-vulnerability-overview.md
+              - Patch Tuesday: user/ui/agents-patch-tuesday.md
+              - SCA Overview: user/ui/agents-sca-overview.md
+          - Report Creation:
+              - Report Creation: user/ui/report-creation.md
+              - General Reports: user/ui/report-general.md
+              - Vulnerability Reports: user/ui/report-vulnerability.md
+              - SCA Reports: user/ui/report-sca.md
+          - Healthcheck: user/ui/healthcheck.md
+          - Indices:
+              - Indices: user/ui/indices.md
+              - Index Management: user/ui/indices-management.md
+              - Snapshot & Restore: user/ui/indices-snapshots.md
+          - Graylog:
+              - Graylog: user/ui/graylog.md
+              - Management: user/ui/graylog-management.md
+              - Metrics: user/ui/graylog-metrics.md
+              - Pipelines: user/ui/graylog-pipelines.md
+              - Threshold Alerts: user/ui/alerts-graylog-threshold.md
+          - Tag-Based Access Control (Tag RBAC): user/ui/tag-access.md
+          - Connectors: user/ui/connectors.md
+          - External Services:
+              - External Services: user/ui/external-services.md
+              - 3rd Party Integrations: user/ui/external-third-party-integrations.md
+              - Network Connectors: user/ui/external-network-connectors.md
+              - Singul App Auth: user/ui/external-singul-app-auth.md
+          - Scheduler: user/ui/scheduler.md
+          - Customer Portal: user/ui/customer-portal.md
+      - Videos (Playlist): user/videos.md
+  - Developer / AI Agent Docs:
+      - Start Here: developer/start-here.md
+      - Architecture: architecture/ARCHITECTURE.md
+      - Map: architecture/MAP.md
+      - Deployment: architecture/DEPLOYMENT.md
+      - Data Flows: architecture/DATA_FLOWS.md
+      - Database Schema: architecture/DATABASE_SCHEMA.md
+      - Adding a Connector: integrations/ADDING_A_CONNECTOR.md

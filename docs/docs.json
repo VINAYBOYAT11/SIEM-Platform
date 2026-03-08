@@ -1,0 +1,227 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "SOCFortress CoPilot",
+  "description": "SOCFortress CoPilot documentation \u2014 operator workflows, admin/engineer configuration, and developer/AI-agent guides.",
+  "logo": {
+    "light": "/assets/brand/logo-text.png",
+    "dark": "/assets/brand/logo-text.png",
+    "href": "/"
+  },
+  "favicon": "/assets/brand/favicon.ico",
+  "colors": {
+    "primary": "#f85d3b",
+    "dark": "#f85d3b",
+    "light": "#f85d3b"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Get Started",
+        "pages": [
+          "getting-started/start-here",
+          "getting-started/install-upgrade",
+          "getting-started/supported-tool-versions",
+          "getting-started/what-is-copilot",
+          "getting-started/roles-and-mental-model",
+          "getting-started/first-wins",
+          "user/operators-quickstart",
+          "user/admins-quickstart",
+          "user/overview",
+          "user/navigation",
+          "user/features"
+        ]
+      },
+      {
+        "tab": "Operator",
+        "pages": [
+          "operator",
+          "user/operators-quickstart",
+          {
+            "group": "Incident Management",
+            "pages": [
+              "user/ui/incident-alerts",
+              "user/ui/incident-cases",
+              "user/ui/artifacts"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "user/ui/agents",
+              "user/ui/agents-groups",
+              "user/ui/agents-sysmon-config",
+              "user/ui/agents-detection-rules",
+              "user/ui/agents-copilot-actions",
+              "user/ui/agents-vulnerability-overview",
+              "user/ui/agents-patch-tuesday",
+              "user/ui/agents-sca-overview"
+            ]
+          },
+          {
+            "group": "SOCFortress Capsules",
+            "pages": [
+              "user/capsules/index"
+            ]
+          },
+          {
+            "group": "Reporting",
+            "pages": [
+              "user/ui/report-creation",
+              "user/ui/report-general",
+              "user/ui/report-vulnerability",
+              "user/ui/report-sca"
+            ]
+          },
+          {
+            "group": "Videos",
+            "pages": [
+              "user/videos"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Admin / Platform",
+        "pages": [
+          "admin",
+          "user/admins-quickstart",
+          {
+            "group": "Log ingestion",
+            "pages": [
+              "user/customer-provisioning",
+              "user/ui/external-third-party-integrations",
+              "user/ui/external-network-connectors"
+            ]
+          },
+          {
+            "group": "Alerting (Graylog \u2192 CoPilot)",
+            "pages": [
+              "user/ui/incident-sources",
+              "user/ui/graylog-management",
+              "user/ui/alerts-graylog-threshold"
+            ]
+          },
+          {
+            "group": "Alerting (CoPilot \u2192 Shuffle)",
+            "pages": [
+              "user/ui/alerting-shuffle"
+            ]
+          },
+          {
+            "group": "Indices (Wazuh Indexer)",
+            "pages": [
+              "user/ui/indices-management",
+              "user/ui/indices-snapshots"
+            ]
+          },
+          {
+            "group": "Access Control",
+            "pages": [
+              "user/ui/tag-access"
+            ]
+          },
+          {
+            "group": "Health (InfluxDB)",
+            "pages": [
+              "user/ui/healthcheck"
+            ]
+          },
+          "user/videos"
+        ]
+      },
+      {
+        "tab": "Customer Portal",
+        "pages": [
+          "customer-portal/index"
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Catalog",
+            "pages": [
+              "integrations",
+              "integrations/wazuh",
+              "integrations/office-365",
+              "integrations/mimecast",
+              "integrations/huntress",
+              "integrations/crowdstrike",
+              "integrations/duo",
+              "integrations/defender-for-endpoint",
+              "integrations/bitdefender",
+              "integrations/carbon-black",
+              "integrations/cato-networks",
+              "integrations/darktrace",
+              "integrations/sap-siem"
+            ]
+          },
+          {
+            "group": "Network connectors (syslog)",
+            "pages": [
+              "integrations/network-connectors",
+              "integrations/network-connectors/fortigate",
+              "integrations/network-connectors/palo-alto",
+              "integrations/network-connectors/cisco-asa",
+              "integrations/network-connectors/sonicwall",
+              "integrations/network-connectors/opnsense",
+              "integrations/network-connectors/sentinelone"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Power Features",
+        "groups": [
+          {
+            "group": "Add-ons",
+            "pages": [
+              "power-features",
+              "power-features/mitre-attack",
+              "power-features/patch-tuesday",
+              "power-features/cloud-security-assessment",
+              "power-features/web-vulnerability-assessment",
+              "power-features/github-audit",
+              "power-features/ai-analyst",
+              "power-features/atomic-red-team",
+              "power-features/report-creation"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Developer",
+        "pages": [
+          "developer/start-here",
+          "architecture/ARCHITECTURE",
+          "architecture/MAP",
+          "architecture/DEPLOYMENT",
+          "architecture/DATA_FLOWS",
+          "architecture/DATABASE_SCHEMA",
+          "integrations/ADDING_A_CONNECTOR"
+        ]
+      },
+      {
+        "tab": "Videos",
+        "pages": [
+          "videos",
+          "user/videos"
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Essentials",
+            "pages": [
+              "reference",
+              "reference/troubleshooting",
+              "user/navigation"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

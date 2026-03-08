@@ -1,0 +1,172 @@
+<template>
+	<div class="grid-auto-fit-200 grid gap-2 p-7 pt-4">
+		<CardKV v-for="(value, key) of asset" :key>
+			<template #key>
+				{{ key }}
+			</template>
+			<template #value>
+				<div v-if="key === 'id'">#{{ value }}</div>
+				<div v-else-if="key === 'customer_code'">
+					<code
+						class="text-primary cursor-pointer"
+						@click.stop="routeCustomer({ code: asset.customer_code }).navigate()"
+					>
+						#{{ asset.customer_code }}
+						<Icon :name="LinkIcon" :size="14" class="relative top-0.5" />
+					</code>
+				</div>
+				<div v-else-if="key === 'agent_id'">
+					<code class="text-primary cursor-pointer" @click.stop="routeAgent(asset.agent_id).navigate()">
+						{{ asset.agent_id }}
+						<Icon :name="LinkIcon" :size="14" class="relative top-0.5" />
+					</code>
+				</div>
+				<div v-else-if="key === 'index_name'">
+					<code class="text-primary cursor-pointer" @click.stop="routeIndex(asset.index_name).navigate()">
+						{{ asset.index_name }}
+						<Icon :name="LinkIcon" :size="14" class="relative top-0.5" />
+					</code>
+				</div>
+				<div v-else-if="key === 'index_id'">
+					<code class="text-primary cursor-pointer" @click.stop="openAlertDetails()">
+						{{ asset.index_id }}
+						<Icon :name="ViewIcon" :size="14" class="relative top-0.5" />
+					</code>
+				</div>
+				<div v-else>
+					{{ value === "" ? "-" : (value ?? "-") }}
+				</div>
+			</template>
+		</CardKV>
+	</div>
+
+	<n-modal
+		v-model:show="showAlertDetails"
+		preset="card"
+		content-class="p-0!"
+		:style="{ maxWidth: 'min(800px, 90vw)', minHeight: 'min(550px, 90vh)', overflow: 'hidden' }"
+		:bordered="false"
+		title="Alert Details"
+		segmented
+	>
+		<n-spin :show="loading" class="min-h-40">
+			<n-tabs type="line" animated :tabs-padding="24">
+				<n-tab-pane name="Info" tab="Info" display-directive="show">
+					<div class="grid-auto-fit-200 grid gap-2 p-7 pt-4">
+						<CardKV v-for="(value, key) of alertDetailsInfo" :key>
+							<template #key>
+								{{ key }}
+							</template>
+							<template #value>
+								<div v-if="key === '_index'">
+									<code
+										class="text-primary cursor-pointer"
+										@click.stop="routeIndex(alertDetailsInfo._index).navigate()"
+									>
+										{{ alertDetailsInfo._index }}
+										<Icon :name="LinkIcon" :size="14" class="relative top-0.5" />
+									</code>
+								</div>
+								<div v-else>
+									{{ value === "" ? "-" : (value ?? "-") }}
+								</div>
+							</template>
+						</CardKV>
+					</div>
+				</n-tab-pane>
+				<n-tab-pane name="Source" tab="Source" display-directive="show">
+					<div v-if="alertDetailsSource" class="p-7 pt-4">
+						<CodeSource :code="alertDetailsSource" lang="json" />
+					</div>
+				</n-tab-pane>
+			</n-tabs>
+		</n-spin>
+	</n-modal>
+</template>
+
+<script setup lang="ts">
+import type { AlertAsset, AlertDetails } from "@/types/incidentManagement/alerts.d"
+import _omit from "lodash/omit"
+import { NModal, NSpin, NTabPane, NTabs, useMessage } from "naive-ui"
+import { computed, defineAsyncComponent, ref, toRefs, watch } from "vue"
+import Api from "@/api"
+import CardKV from "@/components/common/cards/CardKV.vue"
+import Icon from "@/components/common/Icon.vue"
+import { useNavigation } from "@/composables/useNavigation"
+
+const props = defineProps<{ asset: AlertAsset }>()
+
+const CodeSource = defineAsyncComponent(() => import("@/components/common/CodeSource.vue"))
+
+const { asset } = toRefs(props)
+
+const LinkIcon = "carbon:launch"
+const ViewIcon = "iconoir:eye-solid"
+const { routeAgent, routeIndex, routeCustomer } = useNavigation()
+const message = useMessage()
+const loading = ref(false)
+const showAlertDetails = ref(false)
+const alertDetails = ref<AlertDetails | null>(null)
+const alertDetailsInfo = computed(() => _omit(alertDetails.value, ["_source"]))
+const alertDetailsSource = computed(() => {
+	if (!alertDetails.value?._source) return undefined
+
+	const source = alertDetails.value._source
+	const priorityKeys = ["timestamp", "agent_name"] // Keys to show first
+	const endKeys = ["message"] // Keys to show last
+
+	// Separate priority keys, end keys, and other keys
+	const existingPriorityKeys = priorityKeys.filter(key => key in source)
+	const existingEndKeys = endKeys.filter(key => key in source)
+	const otherKeys = Object.keys(source)
+		.filter(key => !priorityKeys.includes(key) && !endKeys.includes(key))
+		.sort() // Sort alphabetically
+
+	// Combine: priority keys first, then sorted other keys, then end keys
+	const sortedKeys = [...existingPriorityKeys, ...otherKeys, ...existingEndKeys]
+
+	// Create new object with sorted keys
+	const sortedSource: Record<string, any> = {}
+	sortedKeys.forEach(key => {
+		sortedSource[key] = source[key]
+	})
+
+	return sortedSource
+})
+
+watch(showAlertDetails, val => {
+	if (val && !alertDetails.value) {
+		getAlertDetails(asset.value.index_id, asset.value.index_name)
+	}
+})
+
+function getAlertDetails(indexId: string, indexName: string) {
+	loading.value = true
+
+	Api.incidentManagement.alerts
+		.getAlertDetails(indexId, indexName)
+		.then(res => {
+			if (res.data.success) {
+				alertDetails.value = res.data?.alert_details || null
+			} else {
+				closeAlertDetails()
+				message.warning(res.data?.message || "An error occurred. Please try again later.")
+			}
+		})
+		.catch(err => {
+			closeAlertDetails()
+			message.error(err.response?.data?.message || "An error occurred. Please try again later.")
+		})
+		.finally(() => {
+			loading.value = false
+		})
+}
+
+function openAlertDetails() {
+	showAlertDetails.value = true
+}
+
+function closeAlertDetails() {
+	showAlertDetails.value = false
+}
+</script>
